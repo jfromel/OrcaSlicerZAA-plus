@@ -4166,7 +4166,7 @@ void PrintConfigDef::init_fff_params()
     def->min      = 0;
     def->max      = 100;
     def->mode     = comAdvanced;
-    def->set_default_value(new ConfigOptionFloat(0.05));
+    def->set_default_value(new ConfigOptionFloat(0.02));
 
     def = this->add("layer_change_gcode", coString);
     def->label = L("Layer change G-code");
