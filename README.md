@@ -1,12 +1,12 @@
 # OrcaSlicerZAA+
 
-OrcaSlicerZAA+ is a fork of [adob's OrcaSlicer ZAA branch](https://github.com/adob/OrcaSlicer) that adds **extended ironing pattern support**, allowing the ironing pattern to match any of the top surface patterns available in OrcaSlicer.
+OrcaSlicerZAA+ is a fork of [adob's OrcaSlicer ZAA branch](https://github.com/adob/OrcaSlicer) that adds **extended ironing pattern support**, allowing the ironing pattern to match any of the top surface patterns available in OrcaSlicer. It also includes tool tips for the ZAA (weblinks need work) full wiki at https://github.com/jfromel/OrcaSlicerZAA-plus/wiki
 
-All Z Contouring (ZAA) work is entirely [@adob's](https://github.com/adob). This fork did not contribute to it in any way.
+All Z Contouring (ZAA) work is entirely [@adob's](https://github.com/adob), et al. Contributions from this fork include tool tips, wiki, and recomended default values.
 
 ## What's New in OrcaSlicerZAA+
 
-The only change in this fork is exposing the existing top surface patterns for use with ironing. Previously ironing was limited to Rectilinear and Concentric. OrcaSlicerZAA+ adds all top surface patterns to ironing: Rectilinear, Concentric, Hilbert Curve, Archimedean Chords, Octagram Spiral, Monotonic, Monotonic Line, and Aligned Rectilinear.
+This fork exposes the existing top surface patterns for use with ironing. Previously ironing was limited to Rectilinear and Concentric. OrcaSlicerZAA+ adds all top surface patterns to ironing: Rectilinear, Concentric, Hilbert Curve, Archimedean Chords, Octagram Spiral, Monotonic, Monotonic Line, and Aligned Rectilinear.
 
 ## Also Included: Z Contouring (ZAA)
 
@@ -33,15 +33,15 @@ Pre-built binaries for Mac, Windows, and Linux are available as artifacts from t
 
 ## Credits
 
-- **Z Anti-Aliasing (Z Contouring)**: [@adob](https://github.com/adob) — [BambuStudio-ZAA](https://github.com/adob/BambuStudio-ZAA) and [OrcaSlicer PR #12736](https://github.com/OrcaSlicer/OrcaSlicer/pull/12736). All ZAA/Z Contouring work is entirely adob's — this fork did not contribute to it in any way.
+- **Z Anti-Aliasing (Z Contouring)**: [@adob](https://github.com/adob) — [BambuStudio-ZAA](https://github.com/adob/BambuStudio-ZAA) and [OrcaSlicer PR #12736](https://github.com/OrcaSlicer/OrcaSlicer/pull/12736). All ZAA/Z Contouring work is adob's — this fork refines the UI pending PR.
 - **Original ZAA post-processing script**: [@Theaninova](https://github.com/Theaninova) — [GCodeZAA](https://github.com/Theaninova/GCodeZAA)
 - **ZAA research**: [Anti-aliasing for fused filament deposition](https://arxiv.org/abs/1609.03032) by Hai-Chuan Song et al.
 - **OrcaSlicer**: [@SoftFever](https://github.com/SoftFever) and the OrcaSlicer community
-- **Extended ironing patterns**: [@jfromel](https://github.com/jfromel) — the only change in this fork is exposing existing top surface patterns for use with ironing, so the ironing pattern can match the top surface pattern.
+- **Extended ironing patterns**: [@jfromel](https://github.com/jfromel) — Exposed existing top surface patterns for use with ironing, so the ironing pattern can match the top surface pattern.
 
 ## Contributing
 
-OrcaSlicerZAA+ is maintained by a 3D printing enthusiast, not a professional developer. Pull requests won't be actively reviewed or merged here — but you're welcome to fork this repo and take it wherever you want! If the extended ironing patterns are useful, consider submitting them upstream to [OrcaSlicer](https://github.com/OrcaSlicer/OrcaSlicer/pulls). For Z Contouring improvements, contribute directly to [@adob's PR](https://github.com/OrcaSlicer/OrcaSlicer/pull/12736).
+OrcaSlicerZAA+ is maintained by a manufacturer who utilizes FDM printing. I am not a professional developer, I just wanted a slicer that did a bit more than what's currently available. Pull requests won't be actively reviewed or merged here — but you're welcome to fork this repo and take it wherever you want! If the extended ironing patterns are useful, consider submitting them upstream to [OrcaSlicer](https://github.com/OrcaSlicer/OrcaSlicer/pulls). For Z Contouring improvements, contribute directly to [@adob's PR](https://github.com/OrcaSlicer/OrcaSlicer/pull/12736).
 
 ## Support This Project
 
