@@ -4126,7 +4126,7 @@ void PrintConfigDef::init_fff_params()
     def           = this->add("ironing_expansion", coFloat);
     def->label    = L("Ironing expansion");
     def->category = L("Quality");
-    def->tooltip  = L("Expand or contract the ironing area.");
+    def->tooltip  = L("Expand or contract the ironing area beyond the top surface boundary. Positive values extend ironing past the edge, negative values inset it. When using Z Contouring (ZAA), increase this slightly to ensure the ironing pass covers the full contoured region.");
     def->sidetext = L("mm");
     def->min      = -100;
     def->max      = 100;
@@ -4161,7 +4161,7 @@ void PrintConfigDef::init_fff_params()
     def = this->add("zaa_min_z", coFloat);
     def->label    = L("Minimum z height");
     def->category = L("Quality");
-    def->tooltip  = L("Minimum z layer height. Also controls slicing plane");
+    def->tooltip  = L("Minimum Z height variation for Z Contouring. Lower values produce smoother surfaces but require slower print speeds. 0.02mm gives excellent results on well-tuned printers. 0.05mm is a safe starting point for most printers.");
     def->sidetext = L("mm");
     def->min      = 0;
     def->max      = 100;
