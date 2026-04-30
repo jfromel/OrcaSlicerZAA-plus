@@ -1313,6 +1313,10 @@ wxString OptionsGroup::get_url(const std::string& path_end)
         str = str.Left(pos) + anchor;
     }
     // Orca: point to sf wiki for seam parameters
+    // OrcaSlicerZAA+: point to jfromel wiki for ZAA parameters
+    if (path_end.find("zaa") != std::string::npos || path_end.find("ironing_expansion") != std::string::npos) {
+        return wxString(L"https://github.com/jfromel/OrcaSlicerZAA-plus/wiki/Z-Contouring-%E2%80%90-ZAA");
+    }
     return wxString::Format(L"https://www.orcaslicer.com/wiki/%s", from_u8(path_end));
 
 }

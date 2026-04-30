@@ -4136,7 +4136,7 @@ void PrintConfigDef::init_fff_params()
     def = this->add("zaa_enabled", coBool);
     def->label    = L("Z contouring enabled");
     def->category = L("Quality");
-    def->tooltip  = L("Enable Z-layer contouring (aka Z-layer anti-aliasing)");
+    def->tooltip  = L("Enable Z-layer contouring (aka Z-layer anti-aliasing). See github.com/jfromel/OrcaSlicerZAA-plus/wiki for documentation.");
     def->mode     = comAdvanced;
     def->set_default_value(new ConfigOptionBool(false));
 
@@ -4144,7 +4144,7 @@ void PrintConfigDef::init_fff_params()
     def->label    = L("Minimize wall height angle");
     def->category = L("Quality");
     def->tooltip  = L("Reduce height of top surface perimeters to match height of model edge. "
-                       "Effects perimeters whose slope is less than this angle in degrees. Reasonable value is 35. Set 0 to disable.");
+                       "Effects perimeters whose slope is less than this angle in degrees. Reasonable value is 35. Set 0 to disable. See github.com/jfromel/OrcaSlicerZAA-plus/wiki for details.");
     def->sidetext = L("°");
     def->min      = 0;
     def->max      = 90;
@@ -4154,14 +4154,14 @@ void PrintConfigDef::init_fff_params()
     def = this->add("zaa_dont_alternate_fill_direction", coBool);
     def->label    = L("Don't alternate fill direction");
     def->category = L("Quality");
-    def->tooltip  = L("Disable alternating fill direction when using Z contouring");
+    def->tooltip  = L("Disable alternating fill direction when using Z contouring. See github.com/jfromel/OrcaSlicerZAA-plus/wiki for details.");
     def->mode     = comAdvanced;
     def->set_default_value(new ConfigOptionBool(false));
 
     def = this->add("zaa_min_z", coFloat);
     def->label    = L("Minimum z height");
     def->category = L("Quality");
-    def->tooltip  = L("Minimum Z height variation for Z Contouring. Lower values produce smoother surfaces but require slower print speeds. 0.02mm gives excellent results on well-tuned printers. 0.05mm is a safe starting point for most printers.");
+    def->tooltip  = L("Minimum Z height variation for Z Contouring. Lower values produce smoother surfaces but require slower print speeds. 0.02mm gives excellent results on well-tuned printers. 0.05mm is a safe starting point for most printers. See github.com/jfromel/OrcaSlicerZAA-plus/wiki for details.");
     def->sidetext = L("mm");
     def->min      = 0;
     def->max      = 100;
