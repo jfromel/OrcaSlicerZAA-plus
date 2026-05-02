@@ -1,6 +1,6 @@
 # OrcaSlicerZAA+
 
-OrcaSlicerZAA+ is a fork of [adob's OrcaSlicer ZAA branch](https://github.com/adob/OrcaSlicer) that adds **extended ironing pattern support**, allowing the ironing pattern to match any of the top surface patterns available in OrcaSlicer. It also includes tool tips for the ZAA (weblinks need work) full wiki at https://github.com/jfromel/OrcaSlicerZAA-plus/wiki
+OrcaSlicerZAA+ is a fork of [adob's OrcaSlicer ZAA branch](https://github.com/adob/OrcaSlicer) that adds **bottom layer ZAA, support ZAA and extented ironing patterns**, allowing the ironing pattern to match any of the top surface patterns available in OrcaSlicer. It also includes tool tips for the ZAA to full wiki at https://github.com/jfromel/OrcaSlicerZAA-plus/wiki
 
 All Z Contouring (ZAA) top surface work is entirely [@adob's](https://github.com/adob), et al. Contributions from this fork include bottom surface ZAA, UI improvements, tool tips, wiki, and recommended default values.
 
@@ -10,7 +10,7 @@ This fork exposes the existing top surface patterns for use with ironing. Previo
 
 ## Also Included: Z Contouring (ZAA)
 
-This fork is based on [@adob's](https://github.com/adob) ZAA branch, which implements Z Anti-Aliasing — a non-planar slicing technique that dramatically improves top surface quality. adob's ZAA implementation is currently in review for inclusion in official OrcaSlicer ([PR #12736](https://github.com/OrcaSlicer/OrcaSlicer/pull/12736)).
+This fork is based on [@adob's](https://github.com/adob) ZAA branch, which implements Z Anti-Aliasing — a non-planar slicing technique that dramatically improves top surface quality. adob's ZAA implementation is currently in review for inclusion in official OrcaSlicer ([PR #12736](https://github.com/OrcaSlicer/OrcaSlicer/pull/12736)). This version also includes ZAA for bottom layers and support interface layers. 
 
 ## Download
 
@@ -43,7 +43,7 @@ Pre-built binaries for Mac, Windows, and Linux are available as artifacts from t
 
 ## Contributing
 
-OrcaSlicerZAA+ is maintained by a manufacturer who utilizes FDM printing. I am not a professional developer, I just wanted a slicer that did a bit more than what's currently available. Pull requests won't be actively reviewed or merged here — but you're welcome to fork this repo and take it wherever you want! If the extended ironing patterns are useful, consider submitting them upstream to [OrcaSlicer](https://github.com/OrcaSlicer/OrcaSlicer/pulls). For Z Contouring improvements, contribute directly to [@adob's PR](https://github.com/OrcaSlicer/OrcaSlicer/pull/12736).
+OrcaSlicerZAA+ is maintained by a manufacturer who utilizes FDM printing. I am not a professional developer, I just wanted a slicer that did a bit more than what's currently available. Pull requests won't be actively reviewed or merged here — but you're welcome to fork this repo and take it wherever you want! If the extended ZAA features and ironing patterns are useful, consider submitting them upstream to [OrcaSlicer](https://github.com/OrcaSlicer/OrcaSlicer/pulls). For Z Contouring improvements, contribute directly to [@adob's PR](https://github.com/OrcaSlicer/OrcaSlicer/pull/12736).
 
 ## Support This Project
 
