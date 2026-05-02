@@ -1205,7 +1205,7 @@ PRINT_CONFIG_CLASS_DEFINE(
     ((ConfigOptionFloat,                scarf_joint_flow_ratio))
     ((ConfigOptionPercent,              scarf_overhang_threshold))
     // Orca: Z Anti-Aliasing (aka Z Contouring)
-    ((ConfigOptionBool, zaa_enabled))((ConfigOptionFloat, zaa_minimize_perimeter_height))((ConfigOptionBool, zaa_bottom_enabled))((ConfigOptionFloat, zaa_bottom_min_z))((ConfigOptionBool, zaa_support_interface_enabled))((ConfigOptionFloat, zaa_support_interface_min_z)))
+    ((ConfigOptionBool, zaa_enabled))((ConfigOptionFloat, zaa_minimize_perimeter_height))((ConfigOptionBool, zaa_bottom_enabled))((ConfigOptionFloat, zaa_bottom_min_z))((ConfigOptionBool, zaa_support_interface_enabled))((ConfigOptionFloat, zaa_support_interface_min_z))((ConfigOptionBool, zaa_disabled)))
 
 PRINT_CONFIG_CLASS_DEFINE(
     MachineEnvelopeConfig,

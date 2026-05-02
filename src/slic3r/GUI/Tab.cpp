@@ -2320,6 +2320,9 @@ void TabPrint::build()
         optgroup->append_single_option_line("zaa_bottom_min_z", "zaa_bottom_min_z");
         optgroup->append_single_option_line("zaa_support_interface_enabled", "zaa_support_interface_enabled");
         optgroup->append_single_option_line("zaa_support_interface_min_z", "zaa_support_interface_min_z");
+        optgroup->append_separator();
+        // Per-region disable
+        optgroup->append_single_option_line("zaa_disabled", "zaa_disabled");
 
         optgroup = page->new_optgroup(L("Wall generator"), L"param_wall_generator");
         optgroup->append_single_option_line("wall_generator", "quality_settings_wall_generator");

@@ -32,6 +32,10 @@ static double slope_from_normal(const Eigen::Vector3d& normal)
 
 static bool contour_extrusion_path(LayerRegion *region, const sla::IndexedMesh &mesh, ExtrusionPath &path, Layer *override_layer = nullptr)
 {
+    if (region->region().config().zaa_disabled) {
+        return false;
+    }
+
     bool is_top = (path.role() == erTopSolidInfill || path.role() == erIroning || path.role() == erExternalPerimeter || path.role() == erPerimeter);
     bool is_bottom = (path.role() == erBottomSurface);
     bool is_support_interface = (path.role() == erSupportMaterialInterface);
