@@ -196,6 +196,7 @@ public:
                                                                            FillLightning::Generator* lightning_generator) const;
     void 					make_ironing();
     void                    make_contour_z(const sla::IndexedMesh &mesh);
+    void                    make_contour_z_support(const sla::IndexedMesh &mesh);
 
     void                    export_region_slices_to_svg(const char *path) const;
     void                    export_region_fill_surfaces_to_svg(const char *path) const;

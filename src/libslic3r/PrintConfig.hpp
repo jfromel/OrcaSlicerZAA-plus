@@ -1040,7 +1040,8 @@ PRINT_CONFIG_CLASS_DEFINE(
     ((ConfigOptionBool, zaa_enabled))
     ((ConfigOptionBool, zaa_dont_alternate_fill_direction))
     ((ConfigOptionFloat, zaa_min_z))
-
+    ((ConfigOptionBool, zaa_bottom_enabled))
+    ((ConfigOptionFloat, zaa_bottom_min_z))
     // Orca: internal use only
     ((ConfigOptionBool,  calib_flowrate_topinfill_special_order)) // ORCA: special flag for flow rate calibration
 )
@@ -1204,7 +1205,7 @@ PRINT_CONFIG_CLASS_DEFINE(
     ((ConfigOptionFloat,                scarf_joint_flow_ratio))
     ((ConfigOptionPercent,              scarf_overhang_threshold))
     // Orca: Z Anti-Aliasing (aka Z Contouring)
-    ((ConfigOptionBool, zaa_enabled))((ConfigOptionFloat, zaa_minimize_perimeter_height)))
+    ((ConfigOptionBool, zaa_enabled))((ConfigOptionFloat, zaa_minimize_perimeter_height))((ConfigOptionBool, zaa_bottom_enabled))((ConfigOptionFloat, zaa_bottom_min_z))((ConfigOptionBool, zaa_support_interface_enabled))((ConfigOptionFloat, zaa_support_interface_min_z)))
 
 PRINT_CONFIG_CLASS_DEFINE(
     MachineEnvelopeConfig,

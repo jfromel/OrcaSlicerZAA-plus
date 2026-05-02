@@ -2306,10 +2306,20 @@ void TabPrint::build()
         optgroup->append_single_option_line("ironing_angle_fixed", "quality_settings_ironing#fixed-angle");
 
         optgroup = page->new_optgroup("Z Contouring", L"param_advanced");
+        // Top section
         optgroup->append_single_option_line("zaa_enabled", "zaa_enabled");
         optgroup->append_single_option_line("zaa_minimize_perimeter_height", "zaa_minimize_perimeter_height");
+        optgroup->append_single_option_line("zaa_dont_alternate_fill_direction", "zaa_dont_alternate_fill_direction");
         optgroup->append_single_option_line("zaa_min_z", "zaa_min_z");
         optgroup->append_single_option_line("ironing_expansion", "ironing_expansion");
+        optgroup->append_separator();
+        // Bottom section
+        optgroup->append_single_option_line("zaa_bottom_enabled", "zaa_bottom_enabled");
+        optgroup->append_single_option_line("zaa_bottom_minimize_perimeter_height", "zaa_bottom_minimize_perimeter_height");
+        optgroup->append_single_option_line("zaa_bottom_dont_alternate_fill_direction", "zaa_bottom_dont_alternate_fill_direction");
+        optgroup->append_single_option_line("zaa_bottom_min_z", "zaa_bottom_min_z");
+        optgroup->append_single_option_line("zaa_support_interface_enabled", "zaa_support_interface_enabled");
+        optgroup->append_single_option_line("zaa_support_interface_min_z", "zaa_support_interface_min_z");
 
         optgroup = page->new_optgroup(L("Wall generator"), L"param_wall_generator");
         optgroup->append_single_option_line("wall_generator", "quality_settings_wall_generator");

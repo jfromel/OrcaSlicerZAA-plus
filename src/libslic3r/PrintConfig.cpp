@@ -4134,9 +4134,16 @@ void PrintConfigDef::init_fff_params()
     def->set_default_value(new ConfigOptionFloat(0));
 
     def = this->add("zaa_enabled", coBool);
-    def->label    = L("Z contouring enabled");
+    def->label    = L("Z Contour Top");
     def->category = L("Quality");
-    def->tooltip  = L("Enable Z-layer contouring (aka Z-layer anti-aliasing). See github.com/jfromel/OrcaSlicerZAA-plus/wiki for documentation.");
+    def->tooltip  = L("Enable Z-layer contouring on top surfaces (aka Z-layer anti-aliasing). See github.com/jfromel/OrcaSlicerZAA-plus/wiki for documentation.");
+    def->mode     = comAdvanced;
+    def->set_default_value(new ConfigOptionBool(false));
+
+    def = this->add("zaa_disabled", coBool);
+    def->label    = L("Disable Z contouring for region");
+    def->category = L("Quality");
+    def->tooltip  = L("Disable Z contouring for this object. Use this as a per-object override to turn off Z contouring while leaving it enabled globally. See github.com/jfromel/OrcaSlicerZAA-plus/wiki for details.");
     def->mode     = comAdvanced;
     def->set_default_value(new ConfigOptionBool(false));
 
@@ -4167,6 +4174,58 @@ void PrintConfigDef::init_fff_params()
     def->max      = 100;
     def->mode     = comAdvanced;
     def->set_default_value(new ConfigOptionFloat(0.02));
+
+    def = this->add("zaa_bottom_enabled", coBool);
+    def->label    = L("Z Contour Bottom");
+    def->category = L("Quality");
+    def->tooltip  = L("Enable Z-layer contouring on bottom surfaces. Requires support material to be enabled. The nozzle will follow the bottom surface geometry for improved bottom surface quality. See github.com/jfromel/OrcaSlicerZAA-plus/wiki for details.");
+    def->mode     = comAdvanced;
+    def->set_default_value(new ConfigOptionBool(false));
+
+    def = this->add("zaa_bottom_min_z", coFloat);
+    def->label    = L("Bottom minimum z height");
+    def->category = L("Quality");
+    def->tooltip  = L("Minimum Z height variation for bottom surface Z Contouring. Controls how closely the nozzle follows bottom surface geometry. Requires support material. See github.com/jfromel/OrcaSlicerZAA-plus/wiki for details.");
+    def->sidetext = L("mm");
+    def->min      = 0;
+    def->max      = 100;
+    def->mode     = comAdvanced;
+    def->set_default_value(new ConfigOptionFloat(0.02));
+
+    def = this->add("zaa_bottom_minimize_perimeter_height", coFloat);
+    def->label    = L("Bottom wall height angle");
+    def->category = L("Quality");
+    def->tooltip  = L("Reduce height of bottom surface perimeters to match height of model edge. "
+                       "Effects perimeters whose slope is less than this angle in degrees. Reasonable value is 35. Set 0 to disable. See github.com/jfromel/OrcaSlicerZAA-plus/wiki for details.");
+    def->sidetext = L("°");
+    def->min      = 0;
+    def->max      = 90;
+    def->mode     = comAdvanced;
+    def->set_default_value(new ConfigOptionFloat(0));
+
+    def = this->add("zaa_bottom_dont_alternate_fill_direction", coBool);
+    def->label    = L("Don't alternate fill direction");
+    def->category = L("Quality");
+    def->tooltip  = L("Disable alternating fill direction for bottom surfaces when using Z contouring. See github.com/jfromel/OrcaSlicerZAA-plus/wiki for details.");
+    def->mode     = comAdvanced;
+    def->set_default_value(new ConfigOptionBool(false));
+
+    def = this->add("zaa_support_interface_enabled", coBool);
+    def->label    = L("Z contouring support interface enabled");
+    def->category = L("Quality");
+    def->tooltip  = L("Enable Z-layer contouring on support interface top surfaces.");
+    def->mode     = comAdvanced;
+    def->set_default_value(new ConfigOptionBool(false));
+
+    def = this->add("zaa_support_interface_min_z", coFloat);
+    def->label    = L("Support interface minimum z height");
+    def->category = L("Quality");
+    def->tooltip  = L("Minimum Z height variation for support interface Z Contouring.");
+    def->sidetext = L("mm");
+    def->min      = 0;
+    def->max      = 100;
+    def->mode     = comAdvanced;
+    def->set_default_value(new ConfigOptionFloat(0.1));
 
     def = this->add("layer_change_gcode", coString);
     def->label = L("Layer change G-code");

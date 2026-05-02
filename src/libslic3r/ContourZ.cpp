@@ -13,7 +13,7 @@
 
 namespace Slic3r {
 
-static void contour_extrusion_entity(LayerRegion *region, const sla::IndexedMesh &mesh, ExtrusionEntity *extr);
+static void contour_extrusion_entity(LayerRegion *region, const sla::IndexedMesh &mesh, ExtrusionEntity *extr, Layer *override_layer = nullptr);
 
 static double follow_slope_down(double angle_rad, double dist)
 {
@@ -30,13 +30,19 @@ static double slope_from_normal(const Eigen::Vector3d& normal)
 	return angle_rad;
 }
 
-static bool contour_extrusion_path(LayerRegion *region, const sla::IndexedMesh &mesh, ExtrusionPath &path)
+static bool contour_extrusion_path(LayerRegion *region, const sla::IndexedMesh &mesh, ExtrusionPath &path, Layer *override_layer = nullptr)
 {
-    if (path.role() != erTopSolidInfill && path.role() != erIroning && path.role() != erExternalPerimeter && path.role() != erPerimeter) {
+    bool is_top = (path.role() == erTopSolidInfill || path.role() == erIroning || path.role() == erExternalPerimeter || path.role() == erPerimeter);
+    bool is_bottom = (path.role() == erBottomSurface);
+    bool is_support_interface = (path.role() == erSupportMaterialInterface);
+    bool bottom_enabled = region->region().config().zaa_bottom_enabled;
+    bool support_interface_enabled = region->region().config().zaa_support_interface_enabled;
+
+    if (!is_top && !(is_bottom && bottom_enabled) && !(is_support_interface && support_interface_enabled)) {
 		return false;
 	}
 	
-	Layer *layer = region->layer();
+	Layer *layer = override_layer ? override_layer : region->layer();
 	coordf_t mesh_z = layer->print_z + mesh.ground_level();
 	coordf_t min_z = layer->object()->config().zaa_min_z;
 
@@ -83,6 +89,20 @@ static bool contour_extrusion_path(LayerRegion *region, const sla::IndexedMesh &
 			if (path.role() == erIroning) {
 				max_up = height;
 				min_down = -(height + 0.1);
+			}
+			if (path.role() == erBottomSurface) {
+				// For bottom surfaces, we want to follow the surface downward
+				// Limit upward movement and allow more downward movement
+				coordf_t bottom_min_z = layer->object()->config().zaa_bottom_min_z;
+				max_up = 0; // do not raise bottom surfaces
+				min_down = -(height - bottom_min_z);
+			}
+				if (path.role() == erSupportMaterialInterface) {
+				// For support interface, allow upward movement to follow model bottom curve
+				// Larger step creates natural separation gap for easier support removal
+				coordf_t support_interface_min_z = region->region().config().zaa_support_interface_min_z;
+				max_up = support_interface_min_z;
+				min_down = -(height - support_interface_min_z);
 			}
 
             if (is_perimeter(path.role())) {
@@ -150,28 +170,28 @@ static bool contour_extrusion_path(LayerRegion *region, const sla::IndexedMesh &
 	return true;
 }
 
-static void contour_extrusion_multipath(LayerRegion *region, const sla::IndexedMesh &mesh, ExtrusionMultiPath &multipath) 
+static void contour_extrusion_multipath(LayerRegion *region, const sla::IndexedMesh &mesh, ExtrusionMultiPath &multipath, Layer *override_layer = nullptr) 
 {
 	for (ExtrusionPath &path : multipath.paths) {
 		contour_extrusion_path(region, mesh, path);
 	}
 }
 
-static void contour_extrusion_loop(LayerRegion *region, const sla::IndexedMesh &mesh, ExtrusionLoop &loop) 
+static void contour_extrusion_loop(LayerRegion *region, const sla::IndexedMesh &mesh, ExtrusionLoop &loop, Layer *override_layer = nullptr) 
 {
 	for (ExtrusionPath &path : loop.paths) {
 		contour_extrusion_path(region, mesh, path);
 	}
 }
 
-static void contour_extrusion_entitiy_collection(LayerRegion *region, const sla::IndexedMesh &mesh, ExtrusionEntityCollection &collection)
+static void contour_extrusion_entitiy_collection(LayerRegion *region, const sla::IndexedMesh &mesh, ExtrusionEntityCollection &collection, Layer *override_layer = nullptr)
 {
 	for (ExtrusionEntity *entity : collection.entities) {
 		contour_extrusion_entity(region, mesh, entity);
 	}
 }
 
-static void contour_extrusion_entity(LayerRegion *region, const sla::IndexedMesh &mesh, ExtrusionEntity *extr)
+static void contour_extrusion_entity(LayerRegion *region, const sla::IndexedMesh &mesh, ExtrusionEntity *extr, Layer *override_layer)
 {
 	const ExtrusionPathSloped *sloped = dynamic_cast<const ExtrusionPathSloped*>(extr);
 	if (sloped != nullptr) {
@@ -181,19 +201,19 @@ static void contour_extrusion_entity(LayerRegion *region, const sla::IndexedMesh
 
 	ExtrusionMultiPath *multipath = dynamic_cast<ExtrusionMultiPath*>(extr);
 	if (multipath != nullptr) {
-		contour_extrusion_multipath(region, mesh, *multipath);
+		contour_extrusion_multipath(region, mesh, *multipath, override_layer);
 		return;
 	}
 
 	ExtrusionPath *path = dynamic_cast<ExtrusionPath*>(extr);
 	if (path != nullptr) {
-		contour_extrusion_path(region, mesh, *path);
+		contour_extrusion_path(region, mesh, *path, override_layer);
 		return;
 	}
 
 	ExtrusionLoop *loop = dynamic_cast<ExtrusionLoop*>(extr);
 	if (loop != nullptr) {
-		contour_extrusion_loop(region, mesh, *loop);
+		contour_extrusion_loop(region, mesh, *loop, override_layer);
 		return;
 	}
 
@@ -205,7 +225,7 @@ static void contour_extrusion_entity(LayerRegion *region, const sla::IndexedMesh
 
 	ExtrusionEntityCollection *collection = dynamic_cast<ExtrusionEntityCollection*>(extr);
 	if (collection != nullptr) {
-		contour_extrusion_entitiy_collection(region, mesh, *collection);
+		contour_extrusion_entitiy_collection(region, mesh, *collection, override_layer);
 		return;
 	}
 
@@ -230,7 +250,39 @@ void Layer::make_contour_z(const sla::IndexedMesh &mesh)
             continue;
 
         handle_extrusion_collection(region, mesh, region->fills, {erTopSolidInfill, erIroning, erPerimeter, erExternalPerimeter, erMixed});
+        if (region->region().config().zaa_bottom_enabled) {
+            handle_extrusion_collection(region, mesh, region->fills, {erBottomSurface});
+        }
+        if (region->region().config().zaa_support_interface_enabled) {
+            handle_extrusion_collection(region, mesh, region->fills, {erSupportMaterialInterface});
+        }
         handle_extrusion_collection(region, mesh, region->perimeters, {erPerimeter, erExternalPerimeter, erMixed});
+    }
+}
+
+void Layer::make_contour_z_support(const sla::IndexedMesh &mesh)
+{
+    SupportLayer *support_layer = dynamic_cast<SupportLayer*>(this);
+    if (!support_layer)
+        return;
+
+    LayerRegion *region = nullptr;
+    for (size_t i = 0; i < this->object()->print()->num_print_regions(); ++i) {
+        const PrintRegion &print_region = this->object()->print()->get_print_region(i);
+        if (print_region.config().zaa_enabled && print_region.config().zaa_support_interface_enabled) {
+            if (!this->object()->layers().empty() && !this->object()->layers().front()->regions().empty()) {
+                region = this->object()->layers().front()->regions().front();
+            }
+            break;
+        }
+    }
+    if (!region)
+        return;
+
+    for (ExtrusionEntity *extr : support_layer->support_fills.entities) {
+        if (extr->role() == erSupportMaterialInterface) {
+            contour_extrusion_entity(region, mesh, extr, this);
+        }
     }
 }
 } // namespace Slic3r

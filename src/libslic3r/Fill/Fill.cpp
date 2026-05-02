@@ -906,6 +906,8 @@ std::vector<SurfaceFill> group_fills(const Layer &layer, LockRegionParam &lock_p
                 if (is_bridge) {
                     if (surface.is_internal_bridge())
                         params.extrusion_role = erInternalBridgeInfill;
+                    else if (surface.surface_type == stBottomBridge)
+                        params.extrusion_role = erBottomSurface;
                     else
                         params.extrusion_role = erBridgeInfill;
                 } else if (surface.is_solid()) {
