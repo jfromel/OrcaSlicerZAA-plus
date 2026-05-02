@@ -2,7 +2,7 @@
 
 OrcaSlicerZAA+ is a fork of [adob's OrcaSlicer ZAA branch](https://github.com/adob/OrcaSlicer) that adds **extended ironing pattern support**, allowing the ironing pattern to match any of the top surface patterns available in OrcaSlicer. It also includes tool tips for the ZAA (weblinks need work) full wiki at https://github.com/jfromel/OrcaSlicerZAA-plus/wiki
 
-All Z Contouring (ZAA) work is entirely [@adob's](https://github.com/adob), et al. Contributions from this fork include tool tips, wiki, and recomended default values.
+All Z Contouring (ZAA) top surface work is entirely [@adob's](https://github.com/adob), et al. Contributions from this fork include bottom surface ZAA, UI improvements, tool tips, wiki, and recommended default values.
 
 ## What's New in OrcaSlicerZAA+
 
@@ -27,9 +27,10 @@ Pre-built binaries for Mac, Windows, and Linux are available as artifacts from t
 
 1. Open **Process settings -> Quality tab**
 2. Scroll to the **Z Contouring** section
-3. Enable **Z contouring enabled**
-4. Recommended starting settings: Minimize wall height angle 0, Minimum z height 0.05mm
-5. Slow outer wall and top surface speeds to 20-30mm/s for best results
+3. Enable **Z Contour Top** for top surface contouring
+4. Recommended starting settings: Minimum z height 0.02mm, Minimize wall height angle 35°
+5. Enable **Z Contour Bottom** for bottom surface contouring (requires support material)
+6. Slow outer wall and top surface speeds to 20-30mm/s for best results
 
 ## Credits
 
@@ -38,6 +39,7 @@ Pre-built binaries for Mac, Windows, and Linux are available as artifacts from t
 - **ZAA research**: [Anti-aliasing for fused filament deposition](https://arxiv.org/abs/1609.03032) by Hai-Chuan Song et al.
 - **OrcaSlicer**: [@SoftFever](https://github.com/SoftFever) and the OrcaSlicer community
 - **Extended ironing patterns**: [@jfromel](https://github.com/jfromel) — Exposed existing top surface patterns for use with ironing, so the ironing pattern can match the top surface pattern.
+- **Bottom surface ZAA**: [@jfromel](https://github.com/jfromel) — Z Contouring for bottom surfaces with support interface contouring, per-object disable, and UI reorganization (Top/Bottom sections with toggle controls).
 
 ## Contributing
 
